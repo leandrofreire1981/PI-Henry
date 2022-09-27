@@ -6,7 +6,7 @@ module.exports = (sequelize) => {
   sequelize.define('recipe', {
     id: {
       type: DataTypes.UUID, //numero aleatorio de letras y numeros unico
-      defaultValue: DataType.UUIDV4,
+      defaultValue: DataTypes.UUIDV4,
       allowNull: false,
       primaryKey: true
     },
