@@ -27,6 +27,11 @@ module.exports = (sequelize) => {
     img: {
       type: DataTypes.STRING,
       defaultValue: 'https://blogdigital.es/wp-content/uploads/2015/09/imagen-no-encontrada.jpg'
+    },
+    created: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+      allowNull: false
     }
   },
     {
