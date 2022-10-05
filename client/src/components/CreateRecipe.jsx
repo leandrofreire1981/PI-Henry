@@ -15,6 +15,8 @@ export default function CreateRecipe(){
 
     function handleOnStep(e){
         setInput({...input, step: [...input.step, e.target.form[3].value]})
+        e.target.form[3].value = ''
+        e.target.form[3].focus()
     }
 
     return (
@@ -31,7 +33,7 @@ export default function CreateRecipe(){
                 </div>
                 <div>
                     <label>Nivel de "comida saludable": </label>
-                    <input type='text' name='healtScore' onChange={handleOnChange} />
+                    <input type='range' name='healtScore' min={1} max={100} onChange={handleOnChange} />
                 </div>
                 <div>
                     <label>Pasos a seguir: </label>
