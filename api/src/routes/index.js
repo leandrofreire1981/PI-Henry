@@ -24,12 +24,14 @@ router.get('/recipes/:idReceta', idRecipesRouter)
 
 router.post('/post', postRecipeRouter)
 
-router.get('/diets', async (req, res, mext) => {
+router.get('/diets', async (req, res, next) => {
     
     try{
-        const recipes = await axios(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${api_key}&addRecipeInformation=true&number=100`)
+        //const recipes = await axios(`https://api.spoonacular.com/recipes/complexSearch?number=100apiKey=${api_key}&addRecipeInformation=true`)
+        const recipes = await axios(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${api_key}&number=100`)
+        res.status(200).json(recipes)
     }catch(e){
-        next(e)
+        res.status(404).json({err: 'not finded'})
     }
 })
 
@@ -43,5 +45,6 @@ En una primera instancia, cuando no exista ninguno, deberán
 precargar la base de datos con los tipos de datos indicados por spoonacular acá */
 
 module.exports = router;
+
 
 

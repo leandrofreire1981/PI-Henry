@@ -1,0 +1,2 @@
+export const GET_RECIPES_BY_NAME = 'GET_RECIPES_BY_NAME'
+export const GET_ALL_RECIPES = 'GET_ALL_RECIPES '
