@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { getRecipesByName, setRecipeByName } from "../actions"
 import Recipe from "./Recipe"
+import image from '../img/error.jpg'
 
 export default function Home() {
 
@@ -19,10 +20,20 @@ export default function Home() {
         e.preventDefault()
         let array = []
        // dispatch(getRecipesByName(input))
-        console.log('recetas en home: ', recipes)
-        for(const iterator of recipes)
-             if(iterator.name.toLocaleLowerCase().includes(input.toLocaleLowerCase()))
+       for(const iterator of recipes)
+            if(iterator.name.toLocaleLowerCase().includes(input.toLocaleLowerCase()))
                     array.push(iterator)
+        if(!array.length) 
+            array.push({
+                id: 'error',
+                name: 'No se encuentra una receta con ese nombre',
+                summary: '',
+                healthScore: -1,
+                steps: [],
+                diets: [],
+                image: image
+            }) 
+
         setRecipeByName(array, dispatch)
         e.target[0].value=''
     }
@@ -35,7 +46,6 @@ export default function Home() {
                     <input type='text' name='name' onChange={handleOnChange}/>
                 </div>
             </form>
-            
         </div>
     )
 }

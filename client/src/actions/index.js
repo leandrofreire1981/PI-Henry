@@ -1,5 +1,5 @@
-import { GET_RECIPES_BY_NAME, GET_ALL_RECIPES } from "./const"
-
+import { GET_ALL_RECIPES, GET_DIETS, GET_RECIPE_BY_DB, SET_RECIPES_BY_NAME } from "./const"
+import image from '../img/plato-base.jpg'
 
 
 export function getAllRecipes() {
@@ -20,7 +20,7 @@ export function getAllRecipes() {
     }   
 }
 
-export function getRecipesByName(name) {
+/* export function getRecipesByName(name) {
 
     return function(dispatch) {
          //fetch(`http://localhost:5000/recipes`)
@@ -36,15 +36,61 @@ export function getRecipesByName(name) {
                  console.log('Hubo error: ', e)
              })
      }   
- }
+ } */
 
  export function setRecipeByName(array, dispatch){
-    
     return dispatch({
-        type: GET_RECIPES_BY_NAME,
+        type: SET_RECIPES_BY_NAME,
         payload: [...array]
     })
  }
+
+ export function getDiets(){
+
+    return function(dispatch){
+        fetch('http://localhost:5000/diets')
+            .then(r => r.json())
+            .then(r => {
+                return dispatch({
+                    type: GET_DIETS,
+                    payload: r
+                })
+            })
+    }
+ }
+
+
+export function postRecipe(recipe){
+ fetch('http://localhost:5000/post', {
+        method: 'POST',
+        body: JSON.stringify(recipe),
+        headers:{
+            'Content-Type': 'application/json'
+          }
+    }).then(res => res.json())
+    .catch(error => console.error('Error:', error))
+    .then(response => console.log('Success:', response));
+}
+
+export function getRecipesFromDb(){
+    
+    return function(dispatch){
+        fetch('http://localhost:5000/recipedb')
+                    .then(r => r.json())
+                    .then(r => {
+                        for (const iterator of r) {
+                            iterator.image = image
+                        }
+                        console.log('recipe de DB: ', r[3].diets)
+                    dispatch({
+                        type: GET_RECIPE_BY_DB,
+                        payload: r
+                        })
+                    })
+                }
+
+}
+ 
 
 
 

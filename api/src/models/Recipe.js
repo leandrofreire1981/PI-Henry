@@ -21,12 +21,8 @@ module.exports = (sequelize) => {
     healthScore: {
       type: DataTypes.INTEGER
     },
-    instructions: { // instrucciones paso a paso
+    steps: { // instrucciones paso a paso
       type: DataTypes.ARRAY(DataTypes.JSONB)
-    },
-    img: {
-      type: DataTypes.STRING,
-      defaultValue: 'https://blogdigital.es/wp-content/uploads/2015/09/imagen-no-encontrada.jpg'
     },
     created: {
       type: DataTypes.BOOLEAN,

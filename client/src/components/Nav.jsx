@@ -5,7 +5,9 @@ export default function Nav() {
 
     return (
         <>
-            Recetario
+            <Link to='/'>
+                <p>Inicio</p>
+            </Link>
             <Link to='/home'>
                 <p>Home</p>
             </Link>
