@@ -9,6 +9,8 @@ import { getAllRecipes, getDiets, getRecipesFromDb } from './actions';
 import Nav from './components/Nav';
 import Recipe from './components/Recipe';
 import CreateRecipe from './components/CreateRecipe';
+import Buscar from './components/Buscar';
+
 
 
 
@@ -18,25 +20,28 @@ function App() {
 
   const dispatch = useDispatch()
 
-  useEffect(() => dispatch(getDiets()), [dispatch])
+  //useEffect(() => dispatch(getDiets()), [dispatch])
   
-  dispatch(getAllRecipes())
- 
-
-  useEffect(() => dispatch( getRecipesFromDb()), [dispatch])
+ dispatch(getAllRecipes())
+  dispatch(getDiets())
+  dispatch(getRecipesFromDb())
+  //useEffect(() => dispatch( getRecipesFromDb(dispatch)), [dispatch])
   return (
     <div className="App">
       <h1>Recetas</h1>
       <Nav />
       <Route exact path='/home'>
         <Home />
-        <Recipe />
+      {/*   <Recipe /> */}
       </Route>
       <Route exact path='/recipes' >
-          <Recipes />
+       {/*    <Recipes /> */}
       </Route>
       <Route exact path='/createrecipes'>
         <CreateRecipe />
+      </Route>
+      <Route exact path='/buscar'>
+        <Buscar/>
       </Route>
     </div>
   );

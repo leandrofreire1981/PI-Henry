@@ -11,11 +11,14 @@ export default function Nav() {
             <Link to='/home'>
                 <p>Home</p>
             </Link>
-            <Link to='/recipes'>
+{/*             <Link to='/recipes'>
                 <p>Recetas</p>
-            </Link>
+            </Link> */}
             <Link to='/createrecipes'>
                 <p>Crear Receta</p>
+            </Link>
+            <Link to='/buscar'>
+                <p>Buscar recetas</p>
             </Link>
         </>
     )

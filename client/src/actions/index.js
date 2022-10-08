@@ -70,6 +70,8 @@ export function postRecipe(recipe){
     }).then(res => res.json())
     .catch(error => console.error('Error:', error))
     .then(response => console.log('Success:', response));
+    alert('receta creada con exito')
+    getRecipesFromDb()
 }
 
 export function getRecipesFromDb(){
@@ -81,7 +83,7 @@ export function getRecipesFromDb(){
                         for (const iterator of r) {
                             iterator.image = image
                         }
-                        console.log('recipe de DB: ', r[3].diets)
+                      //  console.log('recipe de DB: ', r[3].diets)
                     dispatch({
                         type: GET_RECIPE_BY_DB,
                         payload: r

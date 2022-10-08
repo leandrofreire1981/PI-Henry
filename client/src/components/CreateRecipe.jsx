@@ -1,10 +1,11 @@
 import { useState } from "react"
-import { useSelector } from "react-redux"
-import { postRecipe } from "../actions"
+import { useDispatch, useSelector } from "react-redux"
+import { getRecipesFromDb, postRecipe } from "../actions"
 
 export default function CreateRecipe(){
 
     const diets = useSelector(state => state.diets)
+     
 
     const [input, setInput ] = useState({
         name: '',
@@ -36,15 +37,19 @@ export default function CreateRecipe(){
     }
 
     function handleOnSubmit(e){
+        
         e.preventDefault()
-        console.log(input)
+        console.log('targete' ,e.target[0])
         postRecipe(input)
-        console.log('receta almacenada')
+        e.target.form = [...e.target]
+        handleOnClear(e)
+       
+        
     }
 
     function handleOnClear(e){
         for(let i=0; i<5; i++)
-            e.target.form[i].value = ''
+            e.target.form[i].value = '' 
         setInput({
             name: '',
             summary: '',
