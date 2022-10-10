@@ -1,14 +1,12 @@
-import { useEffect, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { getAllRecipes, getRecipesFromDb, postRecipe } from "../actions"
+import { useState } from "react"
+import { useSelector } from "react-redux"
+import { postRecipe } from "../actions"
+import styleHome from '../styles/Home.module.css'
 
 export default function CreateRecipe(){
 
-    const dispatch = useDispatch()
-
     const diets = useSelector(state => state.diets)
-     
-
+   
     const [input, setInput ] = useState({
         name: '',
         summary: '',
@@ -20,11 +18,9 @@ export default function CreateRecipe(){
 
 
     function handleOnChange(e){
-     if(/^[a-zA-Z0-9.]/.test(e.target.value))
         setInput({...input, [e.target.name]: e.target.value})
          if(input.name && input.summary && input.diet.length) 
             e.target.form[7].type = 'submit'
-        console.log(e.target.form[3].value)
     }
 
     function handleOnSelect(e){
@@ -48,9 +44,6 @@ export default function CreateRecipe(){
         postRecipe(input)
         e.target.form = [...e.target]
         handleOnClear(e)
-      //  dispatch( getRecipesFromDb(dispatch))
-//dispatch(getAllRecipes())
-        
     }
 
     function handleOnClear(e){
@@ -67,26 +60,26 @@ export default function CreateRecipe(){
      }
 
     return (
-        <>
-            <h3>Crear una Receta</h3>
+        <div className={styleHome.Home}>
+            <h3 className={styleHome.title}>Crear una Receta</h3>
             <form onSubmit={handleOnSubmit}>
                 <div>
-                    <label>Nombre: </label>
-                    <input type='text' name='name' pattern="^[A-Za-z]+$" onChange={handleOnChange} />
+                    <label className={styleHome.title}>Nombre: </label>
+                    <input type='text' name='name' pattern="^[A-Za-z' ']+$" title='Letras y espacios' onChange={handleOnChange} />
                 </div>
                 <div>
-                    <label>Resumen del plato: </label>
-                    <textarea type='text' name='summary' pattern="^[A-Za-z0-9]+$" onChange={handleOnChange} />
+                    <label className={styleHome.title}>Resumen del plato: </label>
+                    <textarea type='text' name='summary' onChange={handleOnChange} />
                 </div>
                 <div>
-                    <label>Nivel de "comida saludable": </label>
+                    <label className={styleHome.title}>Nivel de "comida saludable": </label>
                     <input type='range' name='healthScore' min={1} max={100} onChange={handleOnChange} />
-                    <label>{input.healthScore}</label>
+                    <label className={styleHome.title}>{input.healthScore}</label>
                 </div>
                     <div> 
-                        <label>Tipos de dietas: </label>
+                        <label className={styleHome.title}>Tipos de dietas: </label>
                         <select name='diets' onChange={handleOnSelect}>
-                            <option value=''>Seleccionar</option>
+                            <option className={styleHome.title} value=''>Seleccionar</option>
                             {
                             diets.length? diets.map((r, i) => (
                                 <option key = {i} value={r.name}>{r.name}</option>
@@ -94,7 +87,7 @@ export default function CreateRecipe(){
                     </select>
                     </div>
                 <div>
-                    <label>Pasos a seguir: </label>
+                    <label className={styleHome.title}>Pasos a seguir: </label>
                     <input type='text' name='step'  />
                     <input type='button' name='addStep' value='Agregar Paso' onClick={handleOnStep} />
                 </div>
@@ -106,22 +99,22 @@ export default function CreateRecipe(){
                     <input type='hidden' name='submitRecipe' value='Almacenar' />
                 </div>
                 <div>
-                    <h3>Vista preliminar</h3>
+                    <h3 className={styleHome.title}>Vista preliminar</h3>
                     <div>
-                    <label>{input.name}</label>
+                    <label className={styleHome.title}>{input.name}</label>
                     </div>
                     <div>
-                    <label>{input.summary}</label>
+                    <label className={styleHome.title}>{input.summary}</label>
                     </div>
                     <div>
-                    <label>{input.healthScore}</label>
+                    <label className={styleHome.title}>{input.healthScore}</label>
                     </div>
-                    <div>Dietas:
+                    <div className={styleHome.title}>Dietas:
                         {input.diet?.map((r, i) => (
                             <div key={i}>{i + 1}-{ r }</div>
                         ))}
                     </div>
-                    <div>Pasos:
+                    <div className={styleHome.title}>Pasos:
                         { input.step?.map((r, i) => (
                         <div key={i}>Paso {i + 1}: {r}</div> 
                         ))}
@@ -129,7 +122,7 @@ export default function CreateRecipe(){
   
                 </div>
             </form>
-        </>
+        </div>
     )
 }
 

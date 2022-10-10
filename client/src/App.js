@@ -39,10 +39,6 @@ function App() {
       <Route exact path='/home'>
         <Nav />
         <Home />
-      {/*   <Recipe /> */}
-      </Route>
-      <Route exact path='/recipes' >
-       {/*    <Recipes /> */}
       </Route>
       <Route exact path='/createrecipes'>
         <Nav />

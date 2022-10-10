@@ -33,3 +33,12 @@
 .button {
     width: 110px;
 }
+
+.title { 
+    color: white;
+}
+
+#button{
+    color:blue;
+    background-color: brown;
+}

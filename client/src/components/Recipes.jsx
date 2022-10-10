@@ -1,15 +1,10 @@
 import React from "react"
-import { getAllRecipes, getRecipesFromDb } from "../actions"
-import { useDispatch, useSelector } from 'react-redux'
-import { useEffect, useState } from "react"
+import { useSelector } from 'react-redux'
 import PostRecipes from './PostRecipes'
-
 
 export default function Recipes() {
     let recipes  = useSelector(state => state.recipes[0])
-let recipesDb = useSelector(state => state.recipesDb)
-    //const dispatch = useDispatch
-    //useEffect(() => getRecipesFromDb(), [])
+    let recipesDb = useSelector(state => state.recipesDb)
     
       if(recipes.length && recipesDb.length) 
         return (

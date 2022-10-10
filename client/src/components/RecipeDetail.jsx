@@ -1,9 +1,11 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { useParams } from "react-router-dom"
+import { NavLink, useParams } from "react-router-dom"
 import { clreaState, getRecipesByID } from "../actions"
 import imgLoading from '../img/simpsons.gif'
 import style from '../styles/RecipeDetail.module.css'
+import styleHome from '../styles/Home.module.css'
+import stylePage from '../styles/Page.module.css'
 
 export default function RecipeDetail(){
     const { id }= useParams()
@@ -24,28 +26,37 @@ export default function RecipeDetail(){
 
     if(!recipe.image){
         return(<div>
-            <img src={imgLoading} alt='not found'/>
+            <img className={style.RecipeDetail} src={imgLoading} alt='not found'/>
         </div>)
     }
     else
     return (
-        <div>
-           <h1>{recipe.name}</h1>
-           <div>Healtscore: {recipe.healthScore}</div> 
-           <div>Resumen: {recipe.summary?.replace(/<[^>]*>?/g, "")}</div>
+        <div className={style.RecipeDetail}>
+           <h1 className={style.textA}>{recipe.name}</h1>
+           <div  >
+
+           <div className={style.textB}>Healtscore: {recipe.healthScore}</div> 
+           <div className={style.textC}>Resumen: {recipe.summary?.replace(/<[^>]*>?/g, "")}</div>
            <div>Tipo de dieta:
             <div>
                  {recipe.diets?.map((r, i) => (
-                         <p key={i}>{r.name}</p>))} 
+                     <p key={i}>{r.name}</p>))} 
             </div>
            </div>
            <div>Paso para cocinar:
             <div>
                  {recipe.steps?.map((r, i) => (
-                         <p>{r}</p>))} 
+                     <p>{r}</p>))} 
             </div>
-           </div>
-           <img src={recipe.image} alt='not found' />
+            </div>
+            <img src={recipe.image} alt='not found' />
+            <div>
+                <NavLink to='/home' >
+                    <button className={stylePage.button}>Home</button>
+                </NavLink>
+        </div>
+            </div>
+
         </div>
     )
 }

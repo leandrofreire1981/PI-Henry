@@ -50,7 +50,7 @@ router.get('/recipedb', async (req, res, next) => {
         console.log('recetas: ', recipes)
         res.status(200).json(recipes)
     }catch(e){
-        res.status(404).json({err: 'not finded'})
+        next(e)
     }
 })
 

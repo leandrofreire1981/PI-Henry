@@ -1,14 +1,16 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { alphaOrder, getAllRecipes, getRecipesFromDb, reverseAlphaOrder } from "../actions";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import Page from "./Page";
 import PostRecipes from "./PostRecipes";
 import image from '../img/error.jpg'
+import styleHome from '../styles/Home.module.css'
+import stylePage from '../styles/Page.module.css'
+import styleRecipe from '../styles/RecipeDetail.module.css'
 
 export default function Buscar(){
     
     const RECIPE_PAGE = 9
-    const dispatch = useDispatch()
+
     let array = []
     const recipes = useSelector(state => state.recipes)
     const diets = useSelector(state => state.diets)
@@ -18,7 +20,6 @@ export default function Buscar(){
     const [ input, setInput ] = useState({
         
     })
-    const [ render, setRender ] = useState(0) //hasta aca
     
     const lastRecipe = currentPage * RECIPE_PAGE
     const firstRecipe = lastRecipe - RECIPE_PAGE
@@ -27,14 +28,22 @@ export default function Buscar(){
     let renderRecipes = aux.slice(firstRecipe, lastRecipe)
     console.log('render sin orden: ', renderRecipes)    
     
-    
-
-    
     function handleOnChange(e){
         setInput({[e.target.name]:e.target.value})
         let button = document.getElementById('button')
         let ingreso = document.getElementsByClassName('input')
-        button.value=`Buscar por ${e.target.name}`
+        switch (e.target.name) {
+            case 'name':
+                button.value= 'Buscar por nombre'
+                break;
+            case 'diets':
+                button.value= 'Buscar por dietas'
+                break;
+            default:
+                button.value= 'Buscar por healtScore'
+                break;
+        }
+        
         button.type =  'submit' 
         switch (e.target.name) {
             case 'name':
@@ -50,7 +59,7 @@ export default function Buscar(){
                 ingreso[1].value = ''
                 break;
             default:
-               // console.log('ingreso: ', e.target.name)
+
                 break;
         }
     }
@@ -60,7 +69,6 @@ export default function Buscar(){
         let ingreso = document.getElementsByClassName('input')
         console.log('tipo de ingreso: ', ingreso)
 
-        // dispatch(getRecipesByName(input))
         if(ingreso[0].value){
             console.log('ingresaste: ', ingreso[0].name)
             for(const iterator of recipes)
@@ -90,15 +98,13 @@ export default function Buscar(){
         setRecipesFinded([...array])
         console.log('enconrtadas: ',   array)
         e.target[0].value=''
-        //if(array.length===0) */
-        
     }
 
     function emptyElement(){
 
         return ([{
             id: 'error',
-            name: 'No se encuentra una receta con ese nombre',
+            name: 'No se encuentra la receta',
             summary: '',
             healthScore: -1,
             steps: [],
@@ -117,7 +123,6 @@ export default function Buscar(){
         setRecipesFinded([])
         setCurrentPage(1)
         setInput('')
-
     }
 
   
@@ -136,24 +141,22 @@ export default function Buscar(){
        let array = [...recipesFinded]
        setRecipesFinded([...array.reverse((a, b) => a.name.localeCompare(b.name))]) 
        setCurrentPage(1)
-        
-        
     }
 
     
     if(recipesFinded.length===0)
     return (
-        <div>
-                        <h1>Buscar recetas</h1>
+        <div className={styleHome.Home}>
+                        <h1 className={styleHome.title}>Buscar recetas</h1>
             <form onSubmit={(e) => handleOnSubmit(e)}>
-                <div>
-                    <label>Ingrese una comida: </label>
-                    <input type='text' name='name' pattern="^[A-Za-z]+$" title='Deben ser solo letras' className='input' onChange={handleOnChange}/>
+                <div className={styleHome.controls}>
+                    <label className={styleRecipe.textB}>Ingrese una comida: </label>
+                    <input  type='text' name='name' pattern="^[A-Za-z' ']+$" title='Deben ser solo letras' className='input' onChange={handleOnChange}/>
                     <div>
 
-                    <label>Ingrese tipo de dieta: </label>
+                    <label className={styleRecipe.textB}>Ingrese tipo de dieta: </label>
                     <select name='diets' className='input' onChange={handleOnChange}>
-                            <option value=''>Seleccionar</option>
+                            <option  value=''>Seleccionar</option>
                             {
                                 diets.length? diets.map((r, i) => (
                                     <option key = {i} value={r.name}>{r.name}</option>
@@ -162,11 +165,11 @@ export default function Buscar(){
                     </div>
 
                     <div>
-                    <label>Healtscore: </label>
+                    <label className={styleRecipe.textB}>Healtscore: </label>
                     <input type='range' name='healthScore' min='0' max='100' className='input' onChange={handleOnChange}/>
                     <label>{input.healthScore}</label>
                     </div>
-                    <input type='hidden' name='button' id='button' />
+                    <input  type='hidden' name='button' id='button' />
                 </div>
             </form>
             <div>
@@ -178,28 +181,26 @@ export default function Buscar(){
         
         </div>
     )
-
-
-console.log('render: ', renderRecipes)
-    return (
-       <div>
-            <button onClick={alphaOrderRecipes}>a-z</button>   
-            <button onClick={reverseOrder}>z-a</button> 
-
-        <h1>{recipesFinded[0].id === 'error'? recipesFinded[0].id: <p>Recetas encontradas</p> }</h1>
-        <button onClick={handleOnRefresh}>Borrar Busqueda</button>
-        {<Page refresh={refresh} currentPage={currentPage} length={recipesFinded.length} />}
-        <main>
-        {    
-           renderRecipes?.map((r, i) => (
-                 <div key={i}> 
-                    <PostRecipes key={r.id} name={r.name} summary={r.summary} healthScore={r.healthScore} image={r.image} diets={r.diets} steps={r.steps} />    
-                 </div>
-     ))} 
-     
-     </main>
     
-     </div>
+    return (
+        <main className={styleHome.Home}>
+            <div className={styleHome.controls}>
+                <button className={stylePage.button} onClick={alphaOrderRecipes}>a-z</button>   
+                <button className={stylePage.button} onClick={reverseOrder}>z-a</button> 
+
+                <h1 className={styleHome.title}>{recipesFinded[0].id === 'error'? recipesFinded[0].id: <p>Recetas encontradas</p> }</h1>
+                <button className={stylePage.button} onClick={handleOnRefresh}>Borrar Busqueda</button>
+                {<Page refresh={refresh} currentPage={currentPage} length={recipesFinded.length} />}
+                <div className={styleHome.conteiner}>
+                    {    
+                    renderRecipes?.map((r, i) => (
+                    <div key={i}> 
+                            <PostRecipes id={r.id} name={r.name} summary={r.summary} healthScore={r.healthScore} image={r.image} diets={r.diets} steps={r.steps} />    
+                        </div>
+                    ))} 
+                </div>
+            </div>
+        </main>
     )
 
 }

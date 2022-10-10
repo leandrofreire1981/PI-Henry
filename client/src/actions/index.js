@@ -83,7 +83,6 @@ export function getRecipesFromDb(){
                         for (const iterator of r) {
                             iterator.image = image
                         }
-                    console.log('recipe de DB: ', r[0].id)
                     dispatch({
                         type: GET_RECIPE_BY_DB,
                         payload: r
