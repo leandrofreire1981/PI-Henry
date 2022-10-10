@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const { Recipe, Diet } = require('../db.js')
+const { Recipe, Diet } = require('../db')
 const { default: axios } = require('axios');
 const { Router } = require('express');
 const { api_key } = process.env

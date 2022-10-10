@@ -1,25 +1,23 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import Recipes from "./Recipes";
+import style from '../styles/Nav.module.css'
 
 export default function Nav() {
 
     return (
-        <>
-            <Link to='/'>
+        <nav className={style.nav}>
+            <NavLink to='/' className={style.Link}>
                 <p>Inicio</p>
-            </Link>
-            <Link to='/home'>
+            </NavLink>
+            <NavLink to='/home' className={style.Link}>
                 <p>Home</p>
-            </Link>
-{/*             <Link to='/recipes'>
-                <p>Recetas</p>
-            </Link> */}
-            <Link to='/createrecipes'>
+            </NavLink>
+            <NavLink to='/createrecipes' className={style.Link}>
                 <p>Crear Receta</p>
-            </Link>
-            <Link to='/buscar'>
+            </NavLink>
+            <NavLink to='/buscar' className={style.Link}>
                 <p>Buscar recetas</p>
-            </Link>
-        </>
+            </NavLink>
+        </nav>
     )
     }

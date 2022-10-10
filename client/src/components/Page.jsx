@@ -1,4 +1,5 @@
 import PostRecipes from "./PostRecipes"
+import style from '../styles/Page.module.css'
 
 export default function Page(props){
 const { refresh, currentPage, length } = props
@@ -18,8 +19,8 @@ return (
     <div>
         <h3>Pagina: {currentPage}</h3>
 
-        <button onClick={prevPage}>Pagina previa</button>
-        <button onClick={nextPage}>Pagina siguiente</button>
+        <button className={style.button} onClick={prevPage}>Pagina previa</button>
+        <button className={style.button} onClick={nextPage}>Pagina siguiente</button>
 
 
     </div>

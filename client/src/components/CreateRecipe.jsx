@@ -1,8 +1,10 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { getRecipesFromDb, postRecipe } from "../actions"
+import { getAllRecipes, getRecipesFromDb, postRecipe } from "../actions"
 
 export default function CreateRecipe(){
+
+    const dispatch = useDispatch()
 
     const diets = useSelector(state => state.diets)
      
@@ -15,7 +17,10 @@ export default function CreateRecipe(){
         diet: []        
     })
 
+
+
     function handleOnChange(e){
+     if(/^[a-zA-Z0-9.]/.test(e.target.value))
         setInput({...input, [e.target.name]: e.target.value})
          if(input.name && input.summary && input.diet.length) 
             e.target.form[7].type = 'submit'
@@ -43,7 +48,8 @@ export default function CreateRecipe(){
         postRecipe(input)
         e.target.form = [...e.target]
         handleOnClear(e)
-       
+      //  dispatch( getRecipesFromDb(dispatch))
+//dispatch(getAllRecipes())
         
     }
 
@@ -66,11 +72,11 @@ export default function CreateRecipe(){
             <form onSubmit={handleOnSubmit}>
                 <div>
                     <label>Nombre: </label>
-                    <input type='text' name='name' onChange={handleOnChange} />
+                    <input type='text' name='name' pattern="^[A-Za-z]+$" onChange={handleOnChange} />
                 </div>
                 <div>
                     <label>Resumen del plato: </label>
-                    <textarea type='text' name='summary' onChange={handleOnChange} />
+                    <textarea type='text' name='summary' pattern="^[A-Za-z0-9]+$" onChange={handleOnChange} />
                 </div>
                 <div>
                     <label>Nivel de "comida saludable": </label>
@@ -81,9 +87,10 @@ export default function CreateRecipe(){
                         <label>Tipos de dietas: </label>
                         <select name='diets' onChange={handleOnSelect}>
                             <option value=''>Seleccionar</option>
-                            {diets?.map((r, i) => (
+                            {
+                            diets.length? diets.map((r, i) => (
                                 <option key = {i} value={r.name}>{r.name}</option>
-                            ))}
+                            )): null}
                     </select>
                     </div>
                 <div>
@@ -126,15 +133,4 @@ export default function CreateRecipe(){
     )
 }
 
-
-/* Ruta de creación de recetas: debe contener
-
-[ ] Un formulario controlado con JavaScript con los siguientes campos:
-Nombre
-Resumen del plato
-Nivel de "comida saludable" (health score)
-Paso a paso
-[ ] Posibilidad de seleccionar/agregar uno o más tipos de dietas
-[ ] Botón/Opción para crear una nueva receta
-Es requisito que el formulario de creación esté validado con JavaScript y no sólo con validaciones HTML. Pueden agregar las validaciones que consideren. Por ejemplo: Que el nombre de la receta no pueda contener símbolos, que el health score no pueda exceder determinado valor, etc. */
 

@@ -10,6 +10,9 @@ import Nav from './components/Nav';
 import Recipe from './components/Recipe';
 import CreateRecipe from './components/CreateRecipe';
 import Buscar from './components/Buscar';
+import RecipeDetail from './components/RecipeDetail';
+import LandingPage from './components/LandingPage';
+
 
 
 
@@ -28,9 +31,13 @@ function App() {
   //useEffect(() => dispatch( getRecipesFromDb(dispatch)), [dispatch])
   return (
     <div className="App">
-      <h1>Recetas</h1>
-      <Nav />
+   
+    
+      <Route exact path='/'>
+        <LandingPage />
+      </Route>
       <Route exact path='/home'>
+        <Nav />
         <Home />
       {/*   <Recipe /> */}
       </Route>
@@ -38,10 +45,16 @@ function App() {
        {/*    <Recipes /> */}
       </Route>
       <Route exact path='/createrecipes'>
+        <Nav />
         <CreateRecipe />
       </Route>
       <Route exact path='/buscar'>
+        <Nav />
         <Buscar/>
+      </Route>
+      <Route exact path={`/recipedetail/:id`}>
+        <Nav />
+        <RecipeDetail/>
       </Route>
     </div>
   );
