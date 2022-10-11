@@ -4,7 +4,6 @@ import { Route } from 'react-router-dom'
 import Recipes from './components/Recipes';
 import Home from './components/Home';
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react';
 import { getAllRecipes, getDiets, getRecipesFromDb } from './actions';
 import Nav from './components/Nav';
 import Recipe from './components/Recipe';
